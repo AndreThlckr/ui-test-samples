@@ -16,7 +16,6 @@
 
 package io.github.andrethlckr.kaspresso
 
-import android.os.SystemClock
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import com.kaspersky.components.composesupport.config.withComposeSupport
 import com.kaspersky.kaspresso.kaspresso.Kaspresso
