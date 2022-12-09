@@ -40,6 +40,8 @@ import androidx.lifecycle.Lifecycle.State.STARTED
 import androidx.lifecycle.repeatOnLifecycle
 import io.github.andrethlckr.ui.theme.SampleUiTesterTheme
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.ui.res.stringResource
+import io.github.andrethlckr.R
 
 @Composable
 fun SampleModelScreen(modifier: Modifier = Modifier, viewModel: SampleModelViewModel = hiltViewModel()) {
@@ -70,18 +72,21 @@ internal fun SampleModelScreen(
     modifier: Modifier = Modifier
 ) {
     Column(modifier) {
-        var nameSampleModel by remember { mutableStateOf("Compose") }
+        var nameSampleModel by remember { mutableStateOf("") }
         Row(
-            modifier = Modifier.fillMaxWidth().padding(bottom = 24.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 24.dp),
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             TextField(
+                label = { Text(text = stringResource(id = R.string.item)) },
                 value = nameSampleModel,
                 onValueChange = { nameSampleModel = it }
             )
 
             Button(modifier = Modifier.width(96.dp), onClick = { onSave(nameSampleModel) }) {
-                Text("Save")
+                Text(stringResource(R.string.save))
             }
         }
         items.forEach {

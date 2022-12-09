@@ -16,27 +16,36 @@
 
 package io.github.andrethlckr.ui
 
+import androidx.activity.ComponentActivity
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithText
-import dagger.hilt.android.testing.HiltAndroidRule
-import dagger.hilt.android.testing.HiltAndroidTest
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import io.github.andrethlckr.ui.samplemodel.SampleModelScreen
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import io.github.andrethlckr.data.di.fakeSampleModels
+import org.junit.runner.RunWith
 
-@HiltAndroidTest
-class NavigationTest {
+/**
+ * UI tests for [SampleModelScreen].
+ */
+@RunWith(AndroidJUnit4::class)
+class SampleModelScreenTest {
 
-    @get:Rule(order = 0)
-    var hiltRule = HiltAndroidRule(this)
+    @get:Rule
+    val composeTestRule = createAndroidComposeRule<ComponentActivity>()
 
-    @get:Rule(order = 1)
-    val composeTestRule = createAndroidComposeRule<MainActivity>()
+    @Before
+    fun setup() {
+        composeTestRule.setContent {
+            SampleModelScreen(FAKE_DATA, onSave = {})
+        }
+    }
 
     @Test
-    fun test1() {
-        // TODO: Add navigation tests
-        composeTestRule.onNodeWithText(fakeSampleModels.first(), substring = true).assertExists()
+    fun firstItem_exists() {
+        composeTestRule.onNodeWithText("Saved item: ${FAKE_DATA.first()}").assertExists()
     }
 }
 
+private val FAKE_DATA = listOf("Compose", "Room", "Kotlin")

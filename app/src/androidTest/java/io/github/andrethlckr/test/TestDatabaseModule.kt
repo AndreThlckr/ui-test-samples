@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.github.andrethlckr.testdi
+package io.github.andrethlckr.test
 
 import dagger.Binds
 import dagger.Module

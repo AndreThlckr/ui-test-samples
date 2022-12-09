@@ -14,37 +14,42 @@
  * limitations under the License.
  */
 
-package io.github.andrethlckr.ui.samplemodel
+package io.github.andrethlckr.ui
 
 import androidx.activity.ComponentActivity
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
-import androidx.compose.ui.test.onNodeWithText
-import androidx.compose.ui.test.performClick
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.kaspersky.components.composesupport.config.withComposeSupport
+import com.kaspersky.kaspresso.kaspresso.Kaspresso
+import com.kaspersky.kaspresso.testcases.api.testcase.TestCase
+import io.github.andrethlckr.integration.kaspresso.ComposeMainScreen
+import io.github.andrethlckr.ui.samplemodel.SampleModelScreen
+import io.github.kakaocup.compose.node.element.ComposeScreen.Companion.onComposeScreen
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
-/**
- * UI tests for [SampleModelScreen].
- */
 @RunWith(AndroidJUnit4::class)
-class SampleModelScreenTest {
+class KaspressoSampleModelScreenTest: TestCase(
+    kaspressoBuilder = Kaspresso.Builder.withComposeSupport()
+) {
 
     @get:Rule
-    val composeTestRule = createAndroidComposeRule<ComponentActivity>()
+    val composeRule = createAndroidComposeRule<ComponentActivity>()
 
     @Before
     fun setup() {
-        composeTestRule.setContent {
+        composeRule.setContent {
             SampleModelScreen(FAKE_DATA, onSave = {})
         }
     }
 
     @Test
-    fun firstItem_exists() {
-        composeTestRule.onNodeWithText(FAKE_DATA.first()).assertExists().performClick()
+    fun firstItem_exists() = run {
+        onComposeScreen<ComposeMainScreen>(composeRule) {
+            hasListItem(withText = FAKE_DATA.first())
+        }
     }
 }
 

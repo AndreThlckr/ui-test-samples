@@ -16,4 +16,6 @@
 
 <resources>
     <string name="app_name">SampleUiTester</string>
+    <string name="item">Item</string>
+    <string name="save">Save</string>
 </resources>
