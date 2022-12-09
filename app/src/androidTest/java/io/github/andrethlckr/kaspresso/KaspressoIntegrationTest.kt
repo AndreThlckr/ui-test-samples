@@ -45,18 +45,12 @@ class KaspressoIntegrationTest : TestCase(
             itemTextField {
                 performTextInput("test")
             }
-        }
 
-        onComposeScreen<ComposeMainScreen>(composeRule) {
             saveButton {
                 performClick()
             }
 
-            SystemClock.sleep(2_000)
-
             hasListItem(withText = "test")
-
-            SystemClock.sleep(10_000)
         }
     }
 }
