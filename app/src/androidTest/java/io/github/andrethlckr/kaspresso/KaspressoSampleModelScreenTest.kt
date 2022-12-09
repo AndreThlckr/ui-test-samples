@@ -14,49 +14,42 @@
  * limitations under the License.
  */
 
-package io.github.andrethlckr.integration.kaspresso
+package io.github.andrethlckr.kaspresso
 
+import androidx.activity.ComponentActivity
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.kaspersky.components.composesupport.config.withComposeSupport
 import com.kaspersky.kaspresso.kaspresso.Kaspresso
 import com.kaspersky.kaspresso.testcases.api.testcase.TestCase
-import dagger.hilt.android.testing.HiltAndroidRule
-import dagger.hilt.android.testing.HiltAndroidTest
-import io.github.andrethlckr.ui.MainActivity
+import io.github.andrethlckr.ui.samplemodel.SampleModelScreen
 import io.github.kakaocup.compose.node.element.ComposeScreen.Companion.onComposeScreen
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.junit.runner.RunWith
 
-@HiltAndroidTest
-class KaspressoIntegrationTest : TestCase(
+@RunWith(AndroidJUnit4::class)
+class KaspressoSampleModelScreenTest: TestCase(
     kaspressoBuilder = Kaspresso.Builder.withComposeSupport()
 ) {
 
-    @get:Rule(order = 0)
-    var hiltRule = HiltAndroidRule(this)
+    @get:Rule
+    val composeRule = createAndroidComposeRule<ComponentActivity>()
 
-    @get:Rule(order = 1)
-    val composeRule = createAndroidComposeRule<MainActivity>()
+    @Before
+    fun setup() {
+        composeRule.setContent {
+            SampleModelScreen(FAKE_DATA, onSave = {})
+        }
+    }
 
     @Test
-    fun sample_test() = run {
-        step("Type text on field") {
-            onComposeScreen<ComposeMainScreen>(composeRule) {
-                itemTextField {
-                    performTextInput("test")
-                }
-            }
-        }
-
-        step("Save and check new item") {
-            onComposeScreen<ComposeMainScreen>(composeRule) {
-                saveButton {
-                    performClick()
-                }
-
-                hasListItem(withText = "test")
-            }
+    fun firstItem_exists() = run {
+        onComposeScreen<ComposeMainScreen>(composeRule) {
+            hasListItem(withText = FAKE_DATA.first())
         }
     }
 }
 
+private val FAKE_DATA = listOf("Compose", "Room", "Kotlin")

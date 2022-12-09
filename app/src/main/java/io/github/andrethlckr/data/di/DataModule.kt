@@ -21,7 +21,6 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
 import io.github.andrethlckr.data.SampleModelRepository
 import io.github.andrethlckr.data.DefaultSampleModelRepository
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -50,4 +49,4 @@ class FakeSampleModelRepository @Inject constructor() : SampleModelRepository {
     }
 }
 
-val fakeSampleModels = listOf("One", "Two", "Three")
+val fakeSampleModels = listOf("One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen", "Twelve")

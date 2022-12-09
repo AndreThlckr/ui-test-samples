@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.github.andrethlckr.integration
+package io.github.andrethlckr.basic
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule

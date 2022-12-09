@@ -1,4 +1,4 @@
-package io.github.andrethlckr.integration.kaspresso
+package io.github.andrethlckr.kaspresso
 
 import androidx.annotation.StringRes
 import androidx.compose.ui.test.SemanticsNodeInteractionsProvider

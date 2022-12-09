@@ -14,43 +14,50 @@
  * limitations under the License.
  */
 
-package io.github.andrethlckr.ui
+package io.github.andrethlckr.kaspresso
 
-import androidx.activity.ComponentActivity
+import android.os.SystemClock
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.kaspersky.components.composesupport.config.withComposeSupport
 import com.kaspersky.kaspresso.kaspresso.Kaspresso
 import com.kaspersky.kaspresso.testcases.api.testcase.TestCase
-import io.github.andrethlckr.integration.kaspresso.ComposeMainScreen
-import io.github.andrethlckr.ui.samplemodel.SampleModelScreen
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
+import io.github.andrethlckr.ui.MainActivity
 import io.github.kakaocup.compose.node.element.ComposeScreen.Companion.onComposeScreen
-import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 
-@RunWith(AndroidJUnit4::class)
-class KaspressoSampleModelScreenTest: TestCase(
+@HiltAndroidTest
+class KaspressoIntegrationTest : TestCase(
     kaspressoBuilder = Kaspresso.Builder.withComposeSupport()
 ) {
 
-    @get:Rule
-    val composeRule = createAndroidComposeRule<ComponentActivity>()
+    @get:Rule(order = 0)
+    var hiltRule = HiltAndroidRule(this)
 
-    @Before
-    fun setup() {
-        composeRule.setContent {
-            SampleModelScreen(FAKE_DATA, onSave = {})
-        }
-    }
+    @get:Rule(order = 1)
+    val composeRule = createAndroidComposeRule<MainActivity>()
 
     @Test
-    fun firstItem_exists() = run {
+    fun sample_test() = run {
         onComposeScreen<ComposeMainScreen>(composeRule) {
-            hasListItem(withText = FAKE_DATA.first())
+            itemTextField {
+                performTextInput("test")
+            }
+        }
+
+        onComposeScreen<ComposeMainScreen>(composeRule) {
+            saveButton {
+                performClick()
+            }
+
+            SystemClock.sleep(2_000)
+
+            hasListItem(withText = "test")
+
+            SystemClock.sleep(10_000)
         }
     }
 }
 
-private val FAKE_DATA = listOf("Compose", "Room", "Kotlin")

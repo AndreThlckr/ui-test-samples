@@ -33,7 +33,7 @@ data class SampleModel(
 
 @Dao
 interface SampleModelDao {
-    @Query("SELECT * FROM samplemodel ORDER BY uid DESC LIMIT 10")
+    @Query("SELECT * FROM samplemodel ORDER BY uid")
     fun getSampleModels(): Flow<List<SampleModel>>
 
     @Insert
